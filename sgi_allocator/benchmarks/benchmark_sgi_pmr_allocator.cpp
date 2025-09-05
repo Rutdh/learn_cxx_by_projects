@@ -182,10 +182,9 @@ BENCHMARK(BM_UnsynchronizedPoolResource_MixedAllocations)->Arg(100)->Arg(1000)->
 // 使用 synchronized_pool_resource 的多态分配器向量基准测试
 static void BM_PolymorphicAllocatorVector_Synchronized(benchmark::State& state) {
     synchronized_pool_resource mr;
-    polymorphic_allocator<int> alloc(&mr);
     
     for (auto _ : state) {
-        std::vector<int, polymorphic_allocator<int>> vec(alloc);
+        std::pmr::vector<int> vec(&mr);
         for (int i = 0; i < state.range(0); ++i) {
             vec.push_back(i);
             benchmark::DoNotOptimize(vec.data());
@@ -199,10 +198,9 @@ BENCHMARK(BM_PolymorphicAllocatorVector_Synchronized)->Arg(100)->Arg(1000)->Arg(
 // 使用 unsynchronized_pool_resource 的多态分配器向量基准测试
 static void BM_PolymorphicAllocatorVector_Unsynchronized(benchmark::State& state) {
     unsynchronized_pool_resource mr;
-    polymorphic_allocator<int> alloc(&mr);
     
     for (auto _ : state) {
-        std::vector<int, polymorphic_allocator<int>> vec(alloc);
+        std::pmr::vector<int> vec(&mr);
         for (int i = 0; i < state.range(0); ++i) {
             vec.push_back(i);
             benchmark::DoNotOptimize(vec.data());

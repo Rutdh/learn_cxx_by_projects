@@ -31,9 +31,8 @@ int main() {
     std::cout << "   Large memory deallocated successfully.\n\n";
 
     // Example 4: Using with polymorphic allocator and vector
-    std::cout << "4. Using with std::vector and polymorphic allocator:\n";
-    sgi_pmr::polymorphic_allocator<int> sync_alloc(&sync_mr);
-    std::vector<int, sgi_pmr::polymorphic_allocator<int>> numbers(sync_alloc);
+    std::cout << "4. Using with std::pmr::vector and polymorphic allocator:\n";
+    std::pmr::vector<int> numbers(&sync_mr);
     
     for (int i = 0; i < 10; ++i) {
         numbers.push_back(i * 10);
@@ -49,8 +48,7 @@ int main() {
 
     // Example 5: Using unsynchronized resource with container
     std::cout << "5. Using unsynchronized_pool_resource with container:\n";
-    sgi_pmr::polymorphic_allocator<std::string> unsync_alloc(&unsync_mr);
-    std::vector<std::string, sgi_pmr::polymorphic_allocator<std::string>> strings(unsync_alloc);
+    std::pmr::vector<std::string> strings(&unsync_mr);
     
     for (int i = 0; i < 5; ++i) {
         strings.push_back("String " + std::to_string(i));

@@ -192,7 +192,7 @@ TEST(SGISynchronizedPoolResourceTest, VectorWithPolymorphicAllocator) {
     synchronized_pool_resource mr;
     
     // 使用我们的自定义分配器创建向量
-    std::vector<int, polymorphic_allocator<int>> vec({1, 2, 3, 4, 5}, polymorphic_allocator<int>(&mr));
+    std::pmr::vector<int> vec({1, 2, 3, 4, 5}, &mr);
     
     EXPECT_EQ(vec.size(), 5);
     EXPECT_EQ(vec[0], 1);
@@ -210,7 +210,7 @@ TEST(SGIUnsynchronizedPoolResourceTest, VectorWithPolymorphicAllocator) {
     unsynchronized_pool_resource mr;
     
     // 使用我们的自定义分配器创建向量
-    std::vector<int, polymorphic_allocator<int>> vec({1, 2, 3, 4, 5}, polymorphic_allocator<int>(&mr));
+    std::pmr::vector<int> vec({1, 2, 3, 4, 5}, &mr);
     
     EXPECT_EQ(vec.size(), 5);
     EXPECT_EQ(vec[0], 1);

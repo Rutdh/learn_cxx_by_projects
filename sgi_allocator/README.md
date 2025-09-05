@@ -80,13 +80,11 @@ int main() {
 int main() {
     // 用于多线程应用程序
     sgi_pmr::synchronized_pool_resource sync_mr;
-    std::vector<int, sgi_pmr::polymorphic_allocator<int>> sync_numbers({1, 2, 3, 4, 5},
-                                                                      sgi_pmr::polymorphic_allocator<int>(&sync_mr));
+    std::pmr::vector<int> sync_numbers({1, 2, 3, 4, 5}, &sync_mr);
     
     // 用于单线程应用程序（更好性能）
     sgi_pmr::unsynchronized_pool_resource unsync_mr;
-    std::vector<std::string, sgi_pmr::polymorphic_allocator<std::string>> unsync_strings(
-        sgi_pmr::polymorphic_allocator<std::string>(&unsync_mr));
+    std::pmr::vector<std::string> unsync_strings(&unsync_mr);
     
     // 向两个容器添加元素
     for (int i = 6; i <= 1000; ++i) {
@@ -120,9 +118,8 @@ int main() {
     sgi_pmr::unsynchronized_pool_resource unsync_mr; // 用于单线程最大性能
     
     // 与不同容器类型和资源一起使用
-    std::vector<int, sgi_pmr::polymorphic_allocator<int>> sync_vec(sgi_pmr::polymorphic_allocator<int>(&sync_mr));
-    std::list<std::string, sgi_pmr::polymorphic_allocator<std::string>> unsync_lst(
-        sgi_pmr::polymorphic_allocator<std::string>(&unsync_mr));
+    std::pmr::vector<int> sync_vec(&sync_mr);
+    std::pmr::list<std::string> unsync_lst(&unsync_mr);
     
     for (int i = 0; i < 100; ++i) {
         sync_vec.push_back(i);
