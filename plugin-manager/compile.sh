@@ -29,8 +29,9 @@ link_path="build/compile_commands.json"
 mkdir -p "build"
 
 if [[ -f "${compile_db}" ]]; then
-  echo "==> 更新符号链接 ${link_path} -> ${compile_db}"
-  ln -sfn "${compile_db}" "${link_path}"
+  target="$(realpath "${compile_db}")"
+  echo "==> 更新符号链接 ${link_path} -> ${target}"
+  ln -sfn "${target}" "${link_path}"
 else
   echo "警告: 未找到 ${compile_db}，跳过符号链接创建。"
 fi
